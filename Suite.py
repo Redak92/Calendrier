@@ -63,14 +63,39 @@ def ex5part2():
     return cpt
 
 
-print(ex5part2())
+
 
 
 # Exercice 6
 
 def ex6():
-    
+    with open("input.txt", 'r') as fichier:
+        tab = fichier.readlines()
+
+    lights = [(i, x, -1) for i in range(0, 10) for x in range(0, 10)]
+    taille = len(tab)
+
+    for i in range(taille):
+        tab[i] = tab[i][:-1]
+
+    for i in range(taille):
+        tab[i] = tab[i].split(" ")
+        if tab[i][0] == "toggle":
+            t = 4
+            first_data = tab[i][1].split(',')
+            second_data = tab[i][t - 1].split(',')
+
+            for ab_x in range(int(first_data[0]), int(first_data[1])):
+                for ab_y in range(int(second_data[0]),int(second_data[1])):
+                    lights[ab_x][ab_y] *= -1
+
+        else:
+
+            t = 5
+            first_data = tab[i][2].split(',')
+            second_data = tab[i][t - 1].split(',')
+    print(lights)
+    print(tab)
 
 
-
-
+ex6()
