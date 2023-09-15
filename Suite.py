@@ -29,6 +29,48 @@ def ex5():
 
     return cpt
 
-print(ex5())
+
+def ex5part2():
+    cpt = 0
+    with open("input.txt", 'r') as fichier:
+        tab = fichier.readlines()
+
+
+
+    for i in tab:
+        one_one = 0
+        two_two = 0
+        strings = []
+        t = len(i)
+        for x in range(1,t - 1):
+            if one_one == 0 and i[x - 1] == i[x + 1]:
+                one_one = 1
+
+            strings.append(i[x - 1] + i[x])
+
+        for y in range(len(strings)):
+            for k in range(y + 2, len(strings)):
+                if strings[y] == strings[k]:
+                    two_two = 1
+                    break
+
+            if two_two == 1:
+                break
+
+        if one_one == 1 and two_two == 1:
+            cpt += 1
+
+    return cpt
+
+
+print(ex5part2())
+
+
+# Exercice 6
+
+def ex6():
+    
+
+
 
 
