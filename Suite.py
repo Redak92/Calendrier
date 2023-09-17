@@ -1,3 +1,4 @@
+from functions import functions
 # Exercice 5
 
 def ex5():
@@ -172,4 +173,101 @@ def count_lights_p2(lights):
     return cpt
 
 
-print(ex6part2())
+
+
+#Exercice 7
+
+
+def dec_to_bin(nb):
+    res = ""
+    if nb <= 0:
+        return 0
+    cpt = 1
+    while nb > cpt:
+        cpt *= 2
+    while cpt != 0:
+        a = nb - cpt
+        if a >= 0:
+            nb = a
+            res += "1"
+        else:
+            res += "0"
+        cpt //= 2
+    return res[1:]
+
+
+def and_door(in1, in2):
+    res = 0
+
+    min_len = min(len(in1),len(in2))
+    in2 = in2[-min_len:]
+    in1 = in1[-min_len:]
+    power = min_len - 1
+
+    for i in range(min_len):
+        if in2[i] == "1" and in1[i] == "1":
+            res += 2**power
+        power -= 1
+    return res
+
+
+def or_door(in1, in2):
+    res = 0
+
+    if len(in1) > len(in2):
+        max_len = len(in1)
+
+        while len(in2) < max_len:
+            in2 = "0" + in2
+    else:
+        max_len = len(in2)
+        while len(in1) != max_len:
+            in1 = "0" + in1
+    power = max_len - 1
+
+    for i in range(0,max_len):
+        if in1[i] == "1" or in2[i] == "1":
+            res += 2 ** power
+        power -= 1
+    return res,in1,in2
+
+
+def not_door(in1):
+    res = ""
+    tab = list(in1)
+    compteur = 0
+
+    for i in range(len(in1)):
+        if tab[i] == "0":
+            tab[i] = "1"
+        else:
+            tab[i] = "0"
+    for i in tab:
+        res += i
+
+
+    return res
+
+
+def shift(in1, nb, direction):
+
+    if direction == "l":
+        for i in range(nb):
+            in1 = in1 + "0"
+    else:
+        in1 = in1[:-nb]
+
+    return in1
+
+
+def ex7():
+    with open("input.txt", 'r') as fichier:
+        tab = fichier.readlines()
+
+
+print(functions.clear_input("input.txt"," "))
+
+
+
+
+
