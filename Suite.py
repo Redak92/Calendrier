@@ -261,11 +261,15 @@ def shift(in1, nb, direction):
 
 
 def ex7():
-    with open("input.txt", 'r') as fichier:
-        tab = fichier.readlines()
+    wires = []
+    tab = functions.clear_input("input.txt", " ")
+
+    for line in tab:
+        if line[0] == "NOT":
+            pass
 
 
-print(functions.clear_input("input.txt"," "))
+
 
 
 
