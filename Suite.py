@@ -275,6 +275,12 @@ def base_wires():
             elif line[1] == "OR":
                 wires[line[4]] = or_door(dec_to_bin(int(line[0])),dec_to_bin(int(line[2])))
 
+            else:
+                if line[1][0] == "L":
+                    wires[line[4]] = shift(dec_to_bin(int(line[0])), int(line[2]),'l')
+                else:
+                    wires[line[4]] = shift(dec_to_bin(int(line[0])), int(line[2]), 'r')
+
     return wires
 
 def ex7():
