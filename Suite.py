@@ -177,23 +177,28 @@ def count_lights_p2(lights):
 
 #Exercice 7
 
+def bin_to_dec(binaire):
+    decimal = 0
+    puissance = 0
+    for bit in reversed(binaire):
+        if bit == '1':
+            decimal += 2 ** puissance
+        puissance += 1
 
-def dec_to_bin(nb):
-    res = ""
-    if nb <= 0:
-        return 0
-    cpt = 1
-    while nb > cpt:
-        cpt *= 2
-    while cpt != 0:
-        a = nb - cpt
-        if a >= 0:
-            nb = a
-            res += "1"
-        else:
-            res += "0"
-        cpt //= 2
-    return res[1:]
+    return decimal
+
+def dec_to_bin(decimal):
+    if decimal == 0:
+        return "0"
+
+    binaire = ""
+
+    while decimal > 0:
+        bit = decimal % 2
+        binaire = str(bit) + binaire
+        decimal //= 2
+
+    return binaire
 
 
 def and_door(in1, in2):
@@ -229,24 +234,18 @@ def or_door(in1, in2):
         if in1[i] == "1" or in2[i] == "1":
             res += 2 ** power
         power -= 1
-    return res,in1,in2
+    return res
 
 
 def not_door(in1):
     res = ""
     tab = list(in1)
-    compteur = 0
 
     for i in range(len(in1)):
-        if tab[i] == "0":
-            tab[i] = "1"
-        else:
-            tab[i] = "0"
-    for i in tab:
-        res += i
+        tab[i] = "0" if tab[i] == "1" else "1"
 
 
-    return res
+    return bin_to_dec(tab)
 
 
 def shift(in1, nb, direction):
@@ -257,8 +256,26 @@ def shift(in1, nb, direction):
     else:
         in1 = in1[:-nb]
 
-    return in1
+    return bin_to_dec(in1)
 
+
+def base_wires():
+    wires = {}
+    tab = functions.clear_input("input.txt", " ")
+    print(tab)
+
+    for line in tab:
+        if line[1] == "->" and line[0].isdigit():
+            wires[line[2]] = int(line[0])
+        elif line[2] == "->" and line[1].isdigit():
+            wires[line[3]] = not_door(dec_to_bin(int(line[1])))
+        elif line[0].isdigit() and line[2].isdigit():
+            if line[1] == "AND":
+                wires[line[4]] = and_door(dec_to_bin(int(line[0])),dec_to_bin(int(line[2])))
+            elif line[1] == "OR":
+                wires[line[4]] = or_door(dec_to_bin(int(line[0])),dec_to_bin(int(line[2])))
+
+    return wires
 
 def ex7():
     wires = []
@@ -270,7 +287,7 @@ def ex7():
 
 
 
-
+print(base_wires())
 
 
 
