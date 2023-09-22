@@ -283,29 +283,19 @@ def base_wires():
 
 def ex7():
     wires = base_wires()
-    wires_len = len(wires)
     tab = functions.clear_input("input.txt", " ")
-    cpt = len(tab)
-
-    while wires_len < cpt:
+    while len(wires) < len(tab):
 
         for line in tab:
-            
+
             if line[1] == "->" and line[0] in wires.keys():
                 wires[line[2]] = int(wires[line[0]])
-
-            elif line[0] == "NOT" and line[1] in wires.keys():
+            elif line[2] == "->" and line[1] in wires.keys():
                 wires[line[3]] = not_door(dec_to_bin(int(wires[line[1]])))
-
             elif line[3] == "->" and line[2].isdigit():
-                if line[1][0] == "L":
-                    wires[line[4]] = shift(dec_to_bin(int(wires[line[0]])), int(line[2]),'l')
-                else:
-                    wires[line[4]] = shift(dec_to_bin(int(wires[line[0]])), int(line[2]), 'r')
-            else:
-                wires_len -= 1
+                if line[1][0] == "R":
+                    wires[line[4]] = shift(dec_to_bin(int(wires[line[0]])),)
 
-            wires_len += 1
 
     return wires
 

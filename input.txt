@@ -1,2 +1,3 @@
 123 -> x
-NOT x -> y
+x -> l
+NOT x -> n
