@@ -1,6 +1,2 @@
-444 -> a
-2 AND 10 -> b
-42 OR 21 -> c
-NOT 10 -> d
-2 LSHIFT 2 -> e
-2 RSHIFT 1 -> f
+123 -> x
+NOT x -> y

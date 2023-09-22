@@ -237,15 +237,14 @@ def or_door(in1, in2):
     return res
 
 
-def not_door(in1):
-    res = ""
-    tab = list(in1)
+def not_door(in1): # Fonction pompée, à mieux comprendre même si c'est simple
+    if len(in1) > 16:
+        raise ValueError("L'entrée ne doit pas dépasser 16 bits.")
+    elif len(in1) < 16:
+        in1 = '0' * (16 - len(in1)) + in1
 
-    for i in range(len(in1)):
-        tab[i] = "0" if tab[i] == "1" else "1"
-
-
-    return bin_to_dec(tab)
+    inverted = ''.join(['0' if bit == '1' else '1' for bit in in1])
+    return int(inverted, 2)
 
 
 def shift(in1, nb, direction):
@@ -262,7 +261,6 @@ def shift(in1, nb, direction):
 def base_wires():
     wires = {}
     tab = functions.clear_input("input.txt", " ")
-    print(tab)
 
     for line in tab:
         if line[1] == "->" and line[0].isdigit():
@@ -284,17 +282,31 @@ def base_wires():
     return wires
 
 def ex7():
-    wires = []
+    wires = base_wires()
+    wires_len = len(wires)
     tab = functions.clear_input("input.txt", " ")
+    cpt = len(tab)
 
-    for line in tab:
-        if line[0] == "NOT":
-            pass
+    while wires_len < cpt:
 
+        for line in tab:
+            
+            if line[1] == "->" and line[0] in wires.keys():
+                wires[line[2]] = int(wires[line[0]])
 
+            elif line[0] == "NOT" and line[1] in wires.keys():
+                wires[line[3]] = not_door(dec_to_bin(int(wires[line[1]])))
 
-print(base_wires())
+            elif line[3] == "->" and line[2].isdigit():
+                if line[1][0] == "L":
+                    wires[line[4]] = shift(dec_to_bin(int(wires[line[0]])), int(line[2]),'l')
+                else:
+                    wires[line[4]] = shift(dec_to_bin(int(wires[line[0]])), int(line[2]), 'r')
+            else:
+                wires_len -= 1
 
+            wires_len += 1
 
+    return wires
 
-
+print(ex7())
