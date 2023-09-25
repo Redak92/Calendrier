@@ -257,16 +257,22 @@ def shift(in1, nb, direction):
 
     return bin_to_dec(in1)
 
+def del_elements(tab,tab2):
+    for i in tab2:
+        tab.remove(i)
 
 def base_wires():
     wires = {}
     tab = functions.clear_input("input.txt", " ")
+    to_delete = []
 
     for line in tab:
         if line[1] == "->" and line[0].isdigit():
             wires[line[2]] = int(line[0])
+            to_delete.append(line)
         elif line[2] == "->" and line[1].isdigit():
             wires[line[3]] = not_door(dec_to_bin(int(line[1])))
+            to_delete.append(line)
         elif line[0].isdigit() and line[2].isdigit():
             if line[1] == "AND":
                 wires[line[4]] = and_door(dec_to_bin(int(line[0])),dec_to_bin(int(line[2])))
@@ -278,25 +284,40 @@ def base_wires():
                     wires[line[4]] = shift(dec_to_bin(int(line[0])), int(line[2]),'l')
                 else:
                     wires[line[4]] = shift(dec_to_bin(int(line[0])), int(line[2]), 'r')
+            to_delete.append(line)
 
-    return wires
+    del_elements(tab,to_delete)
+    return wires,tab
+
+def osint(nb):
+    return isinstance(nb,int)
 
 def ex7():
-    wires = base_wires()
-    tab = functions.clear_input("input.txt", " ")
-    while len(wires) < len(tab):
+    f = base_wires()
+    wires = f[0]
+    tab = f[1]
+    cpt = 0
+    for line in tab:
+        wires[line[-1]] = line[:-2]
+    for i in range(16):
+        wires[str(i)] = i
 
+    while not osint(wires['a']):
         for line in tab:
-
-            if line[1] == "->" and line[0] in wires.keys():
-                wires[line[2]] = int(wires[line[0]])
-            elif line[2] == "->" and line[1] in wires.keys():
-                wires[line[3]] = not_door(dec_to_bin(int(wires[line[1]])))
-            elif line[3] == "->" and line[2].isdigit():
-                if line[1][0] == "R":
-                    wires[line[4]] = shift(dec_to_bin(int(wires[line[0]])),)
-
-
-    return wires
+            if osint(wires[line[-1]]):
+                continue
+            elif "AND" in line and osint(wires[line[0]]) and osint(wires[line[2]]):
+                wires[line[-1]] = wires[line[0]] & wires[line[2]]
+            elif "OR" in line and osint(wires[line[0]]) and osint(wires[line[2]]):
+                wires[line[-1]] = wires[line[0]] | wires[line[2]]
+            elif "NOT" in line and osint(wires[line[1]]):
+                wires[line[-1]] = ~wires[line[1]] & 0xFFFF
+            elif "LSHIFT" in line and osint(wires[line[0]]) and osint(wires[line[2]]):
+                wires[line[-1]] =   (wires[line[0]] << wires[line[2]]) & 0xFFFF
+            elif "RSHIFT" in line and osint(wires[line[0]]) and osint(wires[line[2]]):
+                wires[line[-1]] =   (wires[line[0]] >> wires[line[2]]) & 0xFFFF
+            elif len(line) == 3 and osint(wires[line[0]]):
+                wires[line[-1]] = wires[line[0]]
+    return wires['a']
 
 print(ex7())
