@@ -1,5 +1,6 @@
 from functions import functions
 from itertools import permutations
+from string import ascii_lowercase
 
 
 def ex8():
@@ -51,18 +52,55 @@ def ex9():
     return min([calculate_path_cost(path,graph) for path in permutations(graph.keys())]),max([calculate_path_cost(path,graph) for path in permutations(graph.keys())])
 
 
-def ex10(inpt):
-    inpt = "1211"
+def look_and_say(inpt):
     output = ""
     taille = len(inpt)
     i = 0
     while i < taille:
-        cpt = i + 1
-        while cpt < taille and inpt[i] == inpt[cpt]:
-            cpt += 1
+        cpt = 1
+        while True:
+            if i < taille - 1 and inpt[i] == inpt[i + 1]:
+                cpt += 1
+                i += 1
+            else:
+                break
         output += str(cpt) + inpt[i]
-        i += cpt + 1
-        
+        i += 1
+
     return output
 
-print(ex10("1"))
+def ex10():
+
+    inpt = "1113122113"
+
+    for i in range(50):
+        inpt = look_and_say(inpt)
+
+    return len(inpt)
+
+
+def is_straight_by_three(string):
+    for i in range(len(string) - 2):
+        if string[i:i+3] in ascii_lowercase:
+            return True
+    return False
+
+def no_letters(string):
+    for i in string:
+        if i in 'iol':
+            return False
+    return True
+
+
+def overlapp(string):
+    return True if len([string[i] for i in range(len(string) - 1) if string[i] == string[i + 1] and string[i] not in string[:i]]) > 1 else False
+
+
+
+def ex11(string):
+    string = functions.increment(string)
+    while not all([overlapp(string),no_letters(string), is_straight_by_three(string)]):
+        string = functions.increment(string)
+    return string
+
+print(ex11('hepxxyzz'))
