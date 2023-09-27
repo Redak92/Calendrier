@@ -10,3 +10,4 @@ def clear_input(path, spliter=None):
 
     return tab
 
+
