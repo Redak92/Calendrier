@@ -1,14 +1,14 @@
 import requests
 import json
-def clear_input(path, spliter=None):
+def clear_input(path, spliter=None,left_marge=1):
     with open(path, 'r') as fichier:
         tab = fichier.readlines()
     if spliter:
         for i in range(len(tab)):
-            tab[i] = tab[i][:-1].split(spliter)
+            tab[i] = tab[i][:-left_marge].split(spliter)
     else:
         for i in range(len(tab)):
-            tab[i] = tab[i][:-1]
+            tab[i] = tab[i][:-left_marge]
 
     return tab
 
