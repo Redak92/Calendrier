@@ -1,4 +1,5 @@
 from functions import functions
+import re
 
 def data_processing():
     tab = functions.clear_input("input.txt", " ")
@@ -24,5 +25,26 @@ def ex14():
 
 
 
-def ex15();
-    
+def wow():
+    return {'Sue ' + re.match(r'Sue (\d+): (.+?)$', line).groups()[0]: {item.split(': ')[0]: int(item.split(': ')[1]) for item in re.match(r'Sue (\d+): (.+?)$', line).groups()[1].split(', ')} for line in functions.clear_input('input.txt')}
+
+def wow_classique():
+    data = functions.clear_input("input.txt")
+
+    sue_data = {}
+
+    # Utiliser une expression régulière pour extraire les données
+    pattern = r'Sue (\d+): (.+?)$'
+
+    for line in data:
+        match = re.match(pattern, line)
+        if match:
+            sue_number, sue_info = match.groups()
+            sue_info = sue_info.split(', ')
+            sue_attributes = {}
+            for item in sue_info:
+                attribute, value = item.split(': ')
+                sue_attributes[attribute] = int(value)
+            sue_data[f'Sue {sue_number}'] = sue_attributes
+
+    return sue_data
