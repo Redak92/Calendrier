@@ -1,5 +1,7 @@
 from functions import functions
 import re
+from itertools import combinations
+
 
 def data_processing():
     tab = functions.clear_input("input.txt", " ")
@@ -48,3 +50,65 @@ def wow_classique():
             sue_data[f'Sue {sue_number}'] = sue_attributes
 
     return sue_data
+
+
+def ex16():
+    signature = {'children': 3,
+                 'cats': 7,
+                 'samoyeds': 2,
+                 'pomeranians': 3,
+                 'akitas': 0,
+                 'vizslas': 0,
+                 'goldfish': 5,
+                 'trees': 3,
+                 'cars': 2,
+                 'perfumes': 1
+                 }
+    tab = wow()
+    for key, value in tab.items():
+        cpt = 0
+        for element, number in value.items():
+            if element in signature.keys():
+                if element in ['cats', 'trees']:
+                    if signature[element] < number:
+                        cpt += 1
+                    else:
+                        cpt = -1
+
+                elif element in ['pomeranians', 'goldfish']:
+                    if signature[element] > number:
+                        cpt += 1
+                    else:
+                        cpt = -1
+
+                elif signature[element] == number:
+                    cpt += 1
+                else:
+                    cpt = -1
+        if cpt == 3:
+            return key
+
+
+def ex17():
+    conteneurs = functions.clear_input("input.txt")
+    conteneurs = [int(x) for x in conteneurs]
+    resultats = []
+    for r in range(1, len(conteneurs) + 1):
+        for combo in combinations(conteneurs, r):
+            if sum(list(combo)) == 150:
+                resultats.append(list(combo))
+    return len(resultats)
+
+
+def ex17p2():
+    conteneurs = functions.clear_input("input.txt")
+    conteneurs = [int(x) for x in conteneurs]
+    resultats = []
+    for r in range(1, len(conteneurs) + 1):
+        for combo in combinations(conteneurs, r):
+            if sum(list(combo)) == 150:
+                resultats.append(list(combo))
+    return min([len(x) for x in resultats])
+
+
+def ex18():
