@@ -26,6 +26,37 @@ def ex14():
     return max(distances.values()), max(points.values())
 
 
+def ex15():
+    tab = functions.clear_input("input.txt", ":")
+    ingredients = {tab[i][0]: [int(x[-2:]) for x in tab[i][1].split(',')] for i in range(len(tab))}
+    print(ingredients)
+    t = [[3, 0, 0, -3, 2], [-3, 3, 0, 0, 9], [-1, 0, 4, 0, 1], [0, 0, -2, 2, 8]]
+    max_score = 0
+    for i in range(0, 100):
+        for j in range(0, 100 - i):
+            for k in range(0, 100 - i - j):
+                h = 100 - i - j - k
+                a = t[0][0] * i + t[1][0] * j + t[2][0] * k + t[3][0] * h
+                b = t[0][1] * i + t[1][1] * j + t[2][1] * k + t[3][1] * h
+                c = t[0][2] * i + t[1][2] * j + t[2][2] * k + t[3][2] * h
+                d = t[0][3] * i + t[1][3] * j + t[2][3] * k + t[3][3] * h
+                e = t[0][4] * i + t[1][4] * j + t[2][4] * k + t[3][4] * h
+
+                if a <= 0 or b <= 0 or c <= 0 or d <= 0:
+                    score = 0
+                else:
+                    score = a * b * c * d
+
+                if e != 500:
+                    score = 0
+
+                if score > max_score:
+                    max_score = score
+
+
+    return max_score
+
+
 
 def wow():
     return {'Sue ' + re.match(r'Sue (\d+): (.+?)$', line).groups()[0]: {item.split(': ')[0]: int(item.split(': ')[1]) for item in re.match(r'Sue (\d+): (.+?)$', line).groups()[1].split(', ')} for line in functions.clear_input('input.txt')}
