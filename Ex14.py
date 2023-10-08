@@ -61,6 +61,7 @@ def ex15():
 def wow():
     return {'Sue ' + re.match(r'Sue (\d+): (.+?)$', line).groups()[0]: {item.split(': ')[0]: int(item.split(': ')[1]) for item in re.match(r'Sue (\d+): (.+?)$', line).groups()[1].split(', ')} for line in functions.clear_input('input.txt')}
 
+print(wow())
 def wow_classique():
     data = functions.clear_input("input.txt")
 

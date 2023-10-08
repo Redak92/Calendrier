@@ -1,4 +1,3 @@
-import requests
 import json
 def clear_input(path, spliter=None,left_marge=1):
     with open(path, 'r') as fichier:
@@ -31,3 +30,5 @@ def encode_json_open(path):
         data = json.load(fichier)
     return data
 
+
+def neighbors(matrix):
