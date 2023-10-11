@@ -31,4 +31,17 @@ def encode_json_open(path):
     return data
 
 
-def neighbors(matrix):
+def neighbors(matrix, x_abs, y_ord):
+    taille = len(matrix)
+    t_2 = len(matrix[0])
+    tab = []
+    for i in range(-1, 2):
+        for x in range(-1, 2):
+            if 0 <= y_ord + i < taille and 0 <= x_abs + x < t_2 and (i, x) != (0, 0):
+                tab.append(matrix[y_ord + i][x_abs + x])
+
+    return tab
+
+
+
+

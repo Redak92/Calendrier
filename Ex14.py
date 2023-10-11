@@ -61,7 +61,6 @@ def ex15():
 def wow():
     return {'Sue ' + re.match(r'Sue (\d+): (.+?)$', line).groups()[0]: {item.split(': ')[0]: int(item.split(': ')[1]) for item in re.match(r'Sue (\d+): (.+?)$', line).groups()[1].split(', ')} for line in functions.clear_input('input.txt')}
 
-print(wow())
 def wow_classique():
     data = functions.clear_input("input.txt")
 
@@ -144,3 +143,34 @@ def ex17p2():
 
 
 def ex18():
+    grille = functions.clear_input("input.txt")
+    taille = len(grille)
+    t_2 = len(grille[0])
+    steps = 0
+    tab = []
+    while steps != 4:
+        for line_idx in range(taille):
+            line = []
+            for string_idx in range(t_2):
+                neighbors = functions.neighbors(grille, string_idx, line_idx)
+
+                if grille[line_idx][string_idx] == '.' and neighbors.count("#") == 3:
+                    line.append('#')
+                elif grille[line_idx][string_idx] == '#' and (neighbors.count('#') == 2 or neighbors.count("#") == 3):
+                    line.append('#')
+                else:
+                    line.append('.')
+            tab.append(line)
+
+        grille = tab
+        tab = []
+        steps += 1
+    cpt = 0
+    for x in grille:
+        cpt += x.count('#')
+
+    return cpt
+
+t = ex18()
+
+print(t)
