@@ -148,7 +148,9 @@ def ex18():
     t_2 = len(grille[0])
     steps = 0
     tab = []
-    #grille[0][0] = grille[taille][taille] = grille[0][taille] = grille[taille][0] = '#'
+    grille[0] = '#' + grille[0][1:-1] + '#'
+    grille[taille - 1] = '#' + grille[taille - 1][1:-1] + '#'
+
     while steps != 100:
         for line_idx in range(taille):
             line = []
@@ -161,8 +163,17 @@ def ex18():
                     line.append('#')
                 else:
                     line.append('.')
+            if line_idx == 0:
+                line[0] = '#'
+                line[-1] = '#'
+            elif line_idx == taille - 1:
+                line[0] = '#'
+                line[-1] = '#'
+
+
+
             tab.append(line)
-        #tab[0][0] = tab[taille][taille] = tab[0][taille] = tab[taille][0] = '#'
+
 
         grille = tab
         tab = []
@@ -174,5 +185,6 @@ def ex18():
     return cpt
 
 t = ex18()
+
 
 print(t)
