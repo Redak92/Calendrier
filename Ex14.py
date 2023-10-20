@@ -1,5 +1,6 @@
 from functions import functions
 import re
+import sys
 from itertools import combinations
 
 
@@ -185,17 +186,19 @@ def ex18():
     return cpt
 
 
-
+file = functions.clear_input("input.txt", " => ")
+truc = file[-1][0]
+file = file[:-2]
+molecules = {value[0]: [] for value in file}
+for line in file:
+    molecules[line[0]].append(line[1])
 
 def ex19(string = None):
-    file = functions.clear_input("input.txt", " => ")
+    global file
     all_molecules = []
     if not string:
         string = file[-1][0]
-    file = file[:-2]
-    molecules = {value[0]: [] for value in file}
-    for line in file:
-        molecules[line[0]].append(line[1])
+
     for i in range(len(string) - 1):
 
         if string[i] in molecules.keys():
@@ -215,11 +218,18 @@ def ex19(string = None):
     return set(all_molecules)
 
 
-def ex19_2(string, target, steps = 0):
-    if target in ex19(string):
-        return steps
+def rec(string, target, steps=0):
+    a = ex19(string)
+    if string == target:
+        print(steps)
+        sys.exit()
+    elif a == set() or len(string) > len(target):
+        return
     else:
-        for i in ex19(string):
-            ex19_2(i, target, steps + 1)
+        for line in a:
+            rec(line, target, steps + 1)
+    return False
 
 
+
+rec('e', truc)
