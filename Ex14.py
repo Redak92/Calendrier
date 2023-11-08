@@ -186,19 +186,17 @@ def ex18():
     return cpt
 
 
-file = functions.clear_input("input.txt", " => ")
-truc = file[-1][0]
-file = file[:-2]
-molecules = {value[0]: [] for value in file}
-for line in file:
-    molecules[line[0]].append(line[1])
+
 
 def ex19(string = None):
-    global file
+    file = functions.clear_input("input.txt", " => ")
     all_molecules = []
     if not string:
         string = file[-1][0]
-
+    file = file[:-2]
+    molecules = {value[0]: [] for value in file}
+    for line in file:
+        molecules[line[0]].append(line[1])
     for i in range(len(string) - 1):
 
         if string[i] in molecules.keys():
@@ -218,18 +216,20 @@ def ex19(string = None):
     return set(all_molecules)
 
 
-def rec(string, target, steps=0):
-    a = ex19(string)
-    if string == target:
+
+def ex19_2(string, target, steps=0):
+    if len(string) <= len(target):
+        pri
+        return
+    elif string == target:
         print(steps)
         sys.exit()
-    elif a == set() or len(string) > len(target):
-        return
     else:
-        for line in a:
-            rec(line, target, steps + 1)
-    return False
+        for line in ex19(string):
+            ex19_2(line, target, steps + 1)
+
+
+print(ex19_2("e", "HOH"))
 
 
 
-rec('e', truc)
