@@ -186,10 +186,10 @@ def ex18():
     return cpt
 
 
-
+file = functions.clear_input("input.txt", " => ")
 
 def ex19(string = None):
-    file = functions.clear_input("input.txt", " => ")
+    global file
     all_molecules = []
     if not string:
         string = file[-1][0]
@@ -217,12 +217,12 @@ def ex19(string = None):
 
 
 
+
+
 def ex19_2(string, target, steps=0):
-    if len(string) <= len(target):
-        pri
-        return
-    elif string == target:
-        print(steps)
+    print(string)
+    if string == target:
+
         sys.exit()
     else:
         for line in ex19(string):
@@ -233,3 +233,4 @@ print(ex19_2("e", "HOH"))
 
 
 
+print(ex19_2("e","HOH"))
