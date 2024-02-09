@@ -186,51 +186,22 @@ def ex18():
     return cpt
 
 
-file = functions.clear_input("input.txt", " => ")
 
-def ex19(string = None):
-    global file
-    all_molecules = []
-    if not string:
-        string = file[-1][0]
-    file = file[:-2]
-    molecules = {value[0]: [] for value in file}
-    for line in file:
-        molecules[line[0]].append(line[1])
-    for i in range(len(string) - 1):
+def ex19():
+    possibilities = []
+    molecules = functions.clear_input('input.txt', spliter=" => ")
+    string = list(molecules[-1].copy()[0])
+    molecules = molecules[:-1]
+    length = len(string)
+    dicto = {key:[] for key in set([x[0] for x in molecules])}
 
-        if string[i] in molecules.keys():
-            dicto = molecules[string[i]]
-            for value in dicto:
+    for key, value in molecules:
+        dicto[key].append(value)
 
-                all_molecules.append(string[:i] + value + string[i + 1:])
-        elif string[i:i + 2] in molecules.keys():
-            dicto = molecules[string[i:i + 2]]
-            for value in dicto:
-                all_molecules.append(string[:i] + value + string[i + 2:])
-    if string[-1] in molecules.keys():
-        dicto = molecules[string[-1]]
-        for value in dicto:
+    for key, value in dicto.items():
+        
 
-            all_molecules.append(string[:-1] + value)
-    return set(all_molecules)
+    return len(set(possibilities))
 
 
-
-
-
-def ex19_2(string, target, steps=0):
-    print(string)
-    if string == target:
-
-        sys.exit()
-    else:
-        for line in ex19(string):
-            ex19_2(line, target, steps + 1)
-
-
-print(ex19_2("e", "HOH"))
-
-
-
-print(ex19_2("e","HOH"))
+print(ex19())
