@@ -2,6 +2,7 @@ from functions import functions
 import re
 import sys
 from itertools import combinations
+from typing import List
 
 
 def data_processing():
@@ -199,9 +200,41 @@ def ex19():
         dicto[key].append(value)
 
     for key, value in dicto.items():
-        
+        for index, car in enumerate(string):
+            if car == key:
+                for multi in value:
+                    temp = string.copy()
+                    temp[index] = multi
+                    possibilities.append(''.join(temp))
+            if index != length - 1 and string[index: index + 2] == list(key):
+                for multi in value:
+                    temp = string.copy()
+                    temp[index] = multi
+                    temp[index + 1] = ''
+                    possibilities.append(''.join(temp))
 
     return len(set(possibilities))
 
 
-print(ex19())
+def part2(replacements: List[List[str]], molecule: str) -> int: # Tout simplemement stratosphérique
+    original_replacements = replacements.copy()
+
+    steps = 0
+    current_molecule = molecule
+
+    while current_molecule != 'e':
+        try:
+            replacement = max(replacements, key=lambda x: len(x[1]))
+        except ValueError:
+            replacements = original_replacements.copy()
+            replacement = max(replacements, key=lambda x: len(x[1]))
+        before, after = replacement
+        new_molecule = current_molecule.replace(after, before, 1)
+        if current_molecule != new_molecule:
+            steps += 1
+        else:
+            replacements.remove(replacement)
+        current_molecule = new_molecule
+    return steps
+
+print(part2([(i, j) for i, j in functions.clear_input("input.txt", spliter=" => ")], "CRnCaCaCaSiRnBPTiMgArSiRnSiRnMgArSiRnCaFArTiTiBSiThFYCaFArCaCaSiThCaPBSiThSiThCaCaPTiRnPBSiThRnFArArCaCaSiThCaSiThSiRnMgArCaPTiBPRnFArSiThCaSiRnFArBCaSiRnCaPRnFArPMgYCaFArCaPTiTiTiBPBSiThCaPTiBPBSiRnFArBPBSiRnCaFArBPRnSiRnFArRnSiRnBFArCaFArCaCaCaSiThSiThCaCaPBPTiTiRnFArCaPTiBSiAlArPBCaCaCaCaCaSiRnMgArCaSiThFArThCaSiThCaSiRnCaFYCaSiRnFYFArFArCaSiRnFYFArCaSiRnBPMgArSiThPRnFArCaSiRnFArTiRnSiRnFYFArCaSiRnBFArCaSiRnTiMgArSiThCaSiThCaFArPRnFArSiRnFArTiTiTiTiBCaCaSiRnCaCaFYFArSiThCaPTiBPTiBCaSiThSiRnMgArCaF"))

@@ -1,5 +1,8 @@
 import json
-def clear_input(path, spliter=None,left_marge=1): # Traite path en fonction des paramètres : spliter split les lignes et left_marge ignore les n caractères à partir de la fin
+
+
+def clear_input(path, spliter=None,
+                left_marge=1):  # Traite path en fonction des paramètres : spliter split les lignes et left_marge ignore les n caractères à partir de la fin
     with open(path, 'r') as fichier:
         tab = fichier.readlines()
     if spliter:
@@ -12,7 +15,7 @@ def clear_input(path, spliter=None,left_marge=1): # Traite path en fonction des 
     return tab
 
 
-def increment(string): # Ordre polyalpha
+def increment(string):  # Ordre polyalpha
     chars = list(string)
     idx = len(chars) - 1
     while idx >= 0 and chars[idx] == 'z':
@@ -25,13 +28,15 @@ def increment(string): # Ordre polyalpha
 
     return ''.join(chars)
 
-def encode_json_open(path): #Opening json
+
+def encode_json_open(path):  # Opening json
     with open(path, 'r') as fichier:
         data = json.load(fichier)
     return data
 
 
-def neighbors(matrix, x_abs, y_ord): # Prend une matrice en paramètre + une position x et y et renvoie la liste des voisins
+def neighbors(matrix, x_abs,
+              y_ord):  # Prend une matrice en paramètre + une position x et y et renvoie la liste des voisins
     taille = len(matrix)
     t_2 = len(matrix[0])
     tab = []
@@ -42,3 +47,20 @@ def neighbors(matrix, x_abs, y_ord): # Prend une matrice en paramètre + une pos
 
     return tab
 
+
+def listbyline(path: str) -> list[list]:
+    liste = []
+    with open(path, 'r') as file:
+        tab = file.readlines()
+        for line in tab:
+            templist = []
+            for car in line:
+                try:
+                    car = int(car)
+                    templist.append(car)
+                except:
+                    continue
+        liste.append(templist)
+    return liste
+
+print(listbyline('../input.txt'))
