@@ -20,7 +20,7 @@ def ex20part2(puzzle_input: int = 36000000) -> int:
             house += 1
 
 print(ex20part2())
-"""# Correction
+# Correction
 import pytest
 import progressbar
 from sympy import divisors
@@ -65,4 +65,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-"""
