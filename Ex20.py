@@ -21,7 +21,7 @@ def ex20part2(puzzle_input: int = 36000000) -> int:
 
 print(ex20part2())
 # Correction
-import pytest
+"""import pytest
 import progressbar
 from sympy import divisors
 
@@ -65,3 +65,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+"""
